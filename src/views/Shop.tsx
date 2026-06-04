@@ -225,7 +225,7 @@ export default function Shop() {
                   <a 
                     href="/Minighid joc educational – Exploram povesti.pdf" 
                     download="Minighid joc educational – Exploram povesti.pdf"
-                    className="bg-[#3D2B1F] hover:bg-brand-orange text-white font-semibold py-4.5 px-8 rounded-2xl transition-all shadow-md shadow-orange-950/15 flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider"
+                    className="bg-[#3D2B1F] hover:bg-brand-orange text-white font-semibold py-4 px-8 rounded-2xl transition-all shadow-md shadow-orange-950/15 flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider"
                   >
                     <svg className="w-4.5 h-4.5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

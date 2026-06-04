@@ -37,7 +37,7 @@ function Hero() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-[4.5rem] font-bold leading-[1.1] tracking-tight text-text-main">
-              Ajută-ți copilul să înțeleagă cu adevărat <span className="font-serif font-light italic text-brand-orange block mt-2">ce citește</span>
+              Ajută-ți copilul să înțeleagă cu adevărat <span className="font-serif font-light italic text-brand-orange sm:block sm:mt-2">ce citește</span>
             </h1>
             
             <p className="text-base sm:text-lg text-text-muted max-w-xl font-light leading-relaxed">
@@ -46,7 +46,7 @@ function Hero() {
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }}>
-                <Link to="/shop" className="block bg-brand-orange hover:bg-orange-600 text-white font-semibold py-4.5 px-8 rounded-2xl text-center transition-all shadow-md shadow-orange-900/10 text-sm tracking-wider uppercase">
+                <Link to="/shop" className="block bg-brand-orange hover:bg-orange-600 text-white font-semibold py-4 px-8 rounded-2xl text-center transition-all shadow-md shadow-orange-900/10 text-sm tracking-wider uppercase">
                   Descoperă Cartonașele
                 </Link>
               </motion.div>
@@ -63,7 +63,7 @@ function Hero() {
             <div className="absolute -inset-4 bg-brand-purple-light/50 rounded-[3.5rem] transform rotate-3 -z-10 shadow-inner" />
             <div className="absolute inset-0 bg-brand-orange-light/25 rounded-[3rem] transform -rotate-2 -z-10 scale-102" />
             
-            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl shadow-orange-950/10 relative border-8 border-white bg-white p-6 sm:p-8 flex items-center justify-center">
+            <div className="aspect-[4/3] sm:aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl shadow-orange-950/10 relative border-8 border-white bg-white p-6 sm:p-8 flex items-center justify-center">
               <img 
                 src="/logo-mare.jpg" 
                 alt="Logo Povești de-acasă" 
@@ -135,10 +135,10 @@ function Features() {
           className="grid md:grid-cols-3 gap-8 md:gap-10 mt-8"
         >
           {features.map((f, i) => (
-            <motion.div 
+            <motion.div
               key={i}
               variants={fadeInUp}
-              className={`flex flex-col space-y-6 p-8 sm:p-10 rounded-[2.5rem] bg-white border ${f.borderColor} shadow-sm hover:shadow-xl hover:shadow-orange-950/10 transition-all duration-500 hover:-translate-y-1`}
+              className={`flex flex-col space-y-6 p-6 sm:p-8 lg:p-10 rounded-[2.5rem] bg-white border ${f.borderColor} shadow-sm hover:shadow-xl hover:shadow-orange-950/10 transition-all duration-500 hover:-translate-y-1`}
             >
               <div className={`w-14 h-14 rounded-2xl ${f.bgColor} flex items-center justify-center mb-2 shadow-inner`}>
                 {f.icon}
@@ -261,9 +261,9 @@ function About() {
         </motion.div>
         
         {/* Profile photo centered and larger */}
-        <motion.div 
+        <motion.div
           {...fadeInUp}
-          className="relative w-80 h-80 sm:w-[420px] sm:h-[420px] mx-auto mb-16"
+          className="relative w-full max-w-[280px] h-[280px] sm:max-w-[420px] sm:h-[420px] mx-auto mb-12 sm:mb-16"
         >
           <div className="absolute -inset-4 bg-[#FDF8F3] rounded-[3.5rem] transform -rotate-3 -z-10 border border-orange-100 shadow-inner" />
           <div className="absolute inset-0 bg-brand-orange-light/20 rounded-[3rem] transform rotate-2 -z-10 scale-102" />

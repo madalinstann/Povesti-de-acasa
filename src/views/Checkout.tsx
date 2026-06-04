@@ -87,9 +87,9 @@ export default function Checkout() {
         <div className="grid md:grid-cols-12 gap-8 items-start">
           
           {/* Form container - 7 cols */}
-          <motion.div 
+          <motion.div
             {...fadeInUp}
-            className="md:col-span-7 bg-white p-8 sm:p-10 rounded-[2.5rem] shadow-xl shadow-orange-950/5 border border-orange-100/30"
+            className="md:col-span-7 order-2 md:order-1 bg-white p-6 sm:p-10 rounded-[2.5rem] shadow-xl shadow-orange-950/5 border border-orange-100/30"
           >
             <h1 className="text-3xl font-serif font-bold text-text-main mb-6 text-left">
               Finalizează comanda
@@ -227,9 +227,9 @@ export default function Checkout() {
           </motion.div>
 
           {/* Cart summary container - 5 cols */}
-          <motion.div 
+          <motion.div
             {...fadeInUp}
-            className="md:col-span-5 space-y-6"
+            className="md:col-span-5 order-1 md:order-2 space-y-6"
           >
             <div className="bg-[#FAF1E6] p-8 rounded-[2.5rem] border border-orange-100/30 text-left space-y-6">
               <h3 className="font-serif italic text-2xl font-bold text-brand-orange border-b border-orange-200/30 pb-4">
