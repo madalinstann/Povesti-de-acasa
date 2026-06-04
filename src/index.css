@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,650;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-display: "Caveat", cursive;
+  
+  --color-brand-orange: #E8956D;
+  --color-brand-orange-light: #F7D7C4;
+  --color-brand-purple: #D4A5A5;
+  --color-brand-purple-light: #F2E3E3;
+  --color-brand-yellow: #FFD93D;
+  --color-brand-yellow-dark: #FFC107;
+  --color-bg-light: #FDF8F3;
+  --color-text-main: #3D2B1F;
+  --color-text-muted: #6E5C52;
+  --color-footer-bg: #2B1E16;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-main);
+  background-color: #FDF8F3;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+}
