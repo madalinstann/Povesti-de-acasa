@@ -21,32 +21,25 @@ export default function Contact() {
     e.preventDefault();
     setStatus('loading');
 
-    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
-
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
+      const response = await fetch('/api/contact', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
         },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: `Mesaj Nou de la ${formData.name}`,
-          from_name: "Povești de Acasă - Contact",
-          ...formData
-        })
+        body: JSON.stringify(formData)
       });
 
-      const result = await response.json();
-      if (result.success) {
+      const result = await response.json().catch(() => null);
+      if (response.ok && result?.success) {
         setStatus('success');
         setFormData({ name: '', email: '', phone: '', message: '' });
       } else {
         setStatus('error');
       }
     } catch (error) {
-      console.error("Eroare trimitere mesaj:", error);
+      console.error('Eroare trimitere mesaj:', error);
       setStatus('error');
     }
   };

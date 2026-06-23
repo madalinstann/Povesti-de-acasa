@@ -10,6 +10,9 @@ import BlogPost from './views/BlogPost';
 import Checkout from './views/Checkout';
 import Gallery from './views/Gallery';
 import Contact from './views/Contact';
+import Terms from './views/Terms';
+import Privacy from './views/Privacy';
+import NotFound from './views/NotFound';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -132,6 +135,45 @@ export default function App() {
                   transition={{ duration: 0.3 }}
                 >
                   <Contact />
+                </motion.div>
+              } 
+            />
+            <Route 
+              path="/termeni" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Terms />
+                </motion.div>
+              } 
+            />
+            <Route 
+              path="/confidentialitate" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Privacy />
+                </motion.div>
+              } 
+            />
+            <Route 
+              path="*" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <NotFound />
                 </motion.div>
               } 
             />

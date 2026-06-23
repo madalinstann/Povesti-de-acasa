@@ -27,37 +27,33 @@ export default function Checkout() {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
-
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
+      const response = await fetch('/api/order', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
         },
         body: JSON.stringify({
-          access_key: accessKey,
-          subject: `Comandă Nouă de la ${formData.name}`,
-          from_name: "Povești de Acasă Magazin",
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
-          delivery_method: deliveryMethod === 'courier' ? 'Curier Rapid' : 'EasyBox Sameday',
-          delivery_details: deliveryMethod === 'courier' ? formData.address : formData.easyboxName,
-          order_items: "Set Cartonașe 'Explorăm Povești' - 90 cartonașe (99 lei, Livrare Gratuită, Ramburs)"
+          deliveryMethod: deliveryMethod === 'courier' ? 'Curier rapid' : 'EasyBox Sameday',
+          deliveryDetails: deliveryMethod === 'courier' ? formData.address : formData.easyboxName,
+          orderItems: "Set Cartonașe «Explorăm Povești» — 98 cartonașe",
+          total: '99 lei — ramburs'
         })
       });
 
-      const result = await response.json();
-      if (result.success) {
+      const result = await response.json().catch(() => null);
+      if (response.ok && result?.success) {
         setIsSubmitted(true);
       } else {
-        setSubmitError(result.message || "A apărut o problemă la trimiterea comenzii. Te rugăm să încerci din nou.");
+        setSubmitError(result?.message || 'A apărut o problemă la trimiterea comenzii. Te rugăm să încerci din nou.');
       }
     } catch (error) {
-      console.error("Eroare trimitere comanda:", error);
-      setSubmitError("A apărut o eroare de conexiune. Te rugăm să verifici conexiunea și să încerci din nou.");
+      console.error('Eroare trimitere comanda:', error);
+      setSubmitError('A apărut o eroare de conexiune. Te rugăm să verifici conexiunea și să încerci din nou.');
     } finally {
       setIsSubmitting(false);
     }
@@ -81,7 +77,7 @@ export default function Checkout() {
           </h2>
           
           <p className="text-text-muted font-light text-sm sm:text-base leading-relaxed">
-            Îți mulțumim, <span className="font-semibold text-text-main">{formData.name}</span>! Comanda ta pentru setul de cartonașe „Explorăm Povești” a fost înregistrată cu succes. Te vom contacta în curând pentru confirmare și livrare.
+            Îți mulțumim, <span className="font-semibold text-text-main">{formData.name}</span>! Cererea ta pentru setul de cartonașe „Explorăm Povești” a fost trimisă cu succes. Te vom contacta în curând pentru confirmare și livrare.
           </p>
 
           <div className="bg-[#FAF1E6] p-5 rounded-2xl border border-orange-100/50 text-xs text-text-muted space-y-2">
@@ -270,7 +266,7 @@ export default function Checkout() {
                 disabled={isSubmitting}
                 className="w-full bg-[#3D2B1F] hover:bg-brand-orange disabled:bg-gray-400 text-white font-semibold py-5 rounded-2xl transition-all shadow-md shadow-orange-950/15 text-sm tracking-wider uppercase mt-4 flex items-center justify-center gap-2"
               >
-                {isSubmitting ? 'Se trimite comanda...' : 'Confirmă comanda — 99 lei'}
+                {isSubmitting ? 'Se trimite cererea...' : 'Trimite cererea de comandă — 99 lei'}
               </motion.button>
               
               <div className="text-center text-[10px] sm:text-xs text-text-muted/70 flex items-center justify-center gap-2 pt-2 border-t border-orange-100/30">
