@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Package, ShieldCheck, Truck, ChevronDown, Sparkles } from 'lucide-react';
+import { Package, ShieldCheck, Truck, ChevronDown, CheckCircle, HelpCircle, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const fadeInUp = {
@@ -23,7 +23,11 @@ export default function Shop() {
   ];
 
   return (
-    <div className="w-full bg-[#FDF8F3] overflow-hidden">
+    <div className="w-full bg-[#FDF8F3] overflow-hidden relative">
+      
+      {/* Premium blurry background gradient orbs (mesh gradients) */}
+      <div className="absolute top-[15%] left-[5%] w-[25rem] h-[25rem] bg-brand-orange/10 rounded-full blur-[100px] -z-10 pointer-events-none animate-pulse" style={{ animationDuration: '9s' }} />
+      <div className="absolute bottom-[25%] right-[5%] w-[28rem] h-[28rem] bg-brand-purple/15 rounded-full blur-[110px] -z-10 pointer-events-none animate-pulse" style={{ animationDuration: '13s' }} />
       
       {/* Product Details Section (Kinfolk Editorial Layout) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-28">
@@ -46,26 +50,29 @@ export default function Shop() {
             className="lg:col-span-7 space-y-6"
           >
             {/* Main Product View framed like an art canvas */}
-            <div className="aspect-square rounded-[3rem] overflow-hidden bg-white shadow-2xl shadow-orange-950/5 relative border-8 border-white">
-              <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm px-4 py-1.5 rounded-full border border-orange-100/50 text-xs font-semibold uppercase tracking-wider text-text-main flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> În stoc
+            <div className="relative group">
+              <div className="absolute -inset-1.5 bg-gradient-to-tr from-brand-orange via-white to-brand-purple rounded-[3.15rem] opacity-25 blur-[5px] group-hover:opacity-35 transition-opacity duration-700 -z-10" />
+              <div className="aspect-square rounded-[3rem] overflow-hidden bg-white shadow-2xl shadow-orange-950/5 relative border-8 border-white">
+                <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm px-4 py-1.5 rounded-full border border-orange-100/50 text-xs font-semibold uppercase tracking-wider text-text-main flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> În stoc
+                </div>
+                
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={activeImage}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.4 }}
+                    src={images[activeImage]} 
+                    alt="Cartonașe educaționale" 
+                    className="w-full h-full object-cover" 
+                  />
+                </AnimatePresence>
               </div>
-              
-              <AnimatePresence mode="wait">
-                <motion.img 
-                  key={activeImage}
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.4 }}
-                  src={images[activeImage]} 
-                  alt="Cartonașe educaționale" 
-                  className="w-full h-full object-cover" 
-                />
-              </AnimatePresence>
             </div>
             
-            {/* 4 Thumbnails layout */}
+            {/* Gallery Thumbnails layout */}
             <div className="grid grid-cols-4 gap-4 max-w-lg mx-auto">
               {images.map((img, i) => (
                 <motion.button 
@@ -98,14 +105,17 @@ export default function Shop() {
               </span>
               
               <h2 className="text-3xl sm:text-4xl font-serif font-bold leading-tight mb-4 text-text-main text-center">
-                Explorăm Povești – 90 de cartonașe pentru mințile curioase
+                Explorăm Povești – 98 de cartonașe pentru mințile curioase
               </h2>
               
-              <div className="text-4xl font-serif italic text-brand-orange font-semibold my-5">49 lei</div>
+              <div className="flex items-baseline justify-center gap-3 my-5">
+                <span className="text-4xl font-serif italic text-brand-orange font-semibold">99 lei</span>
+                <span className="text-xl text-text-muted/50 line-through font-light">149 lei</span>
+              </div>
               
               <div className="space-y-4 text-text-muted text-sm sm:text-base leading-relaxed font-light text-center max-w-md mx-auto">
                 <p>
-                  90 de cartonașe educaționale care transformă orice poveste citită într-o conversație memorabilă. Întrebările sunt organizate pe 6 niveluri de gândire, de la simpla amintire până la reflecție și gândire critică.
+                  98 de cartonașe educaționale care transformă orice poveste citită într-o conversație memorabilă. Întrebările sunt organizate pe 6 niveluri de gândire, de la simpla amintire până la reflecție și gândire critică.
                 </p>
                 <p>
                   Funcționează cu orice carte – nu trebuie să cumperi nimic altceva. Perfect pentru acasă, la clasă sau în activități de grup.
@@ -225,7 +235,7 @@ export default function Shop() {
                   <a 
                     href="/Minighid joc educational – Exploram povesti.pdf" 
                     download="Minighid joc educational – Exploram povesti.pdf"
-                    className="bg-[#3D2B1F] hover:bg-brand-orange text-white font-semibold py-4 px-8 rounded-2xl transition-all shadow-md shadow-orange-950/15 flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider"
+                    className="bg-[#3D2B1F] hover:bg-brand-orange text-white font-semibold py-4.5 px-8 rounded-2xl transition-all shadow-md shadow-orange-950/15 flex items-center justify-center gap-2.5 text-sm uppercase tracking-wider"
                   >
                     <svg className="w-4.5 h-4.5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -242,7 +252,7 @@ export default function Shop() {
 
 
       {/* FAQ Section (Elegant Animated Accordion) */}
-      <section className="py-24 md:py-32 bg-[#FAF1E6]/60">
+      <section className="py-24 md:py-32 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div {...fadeInUp} className="text-center mb-16">
@@ -253,62 +263,56 @@ export default function Shop() {
             <div className="w-16 h-0.5 bg-brand-orange-light mx-auto mt-4" />
           </motion.div>
           
-          <div className="space-y-4 sm:space-y-6">
-          {[
-            { q: "Cum funcționează jocul „Explorăm Povești”?", a: "Jocul constă în 90 de cartonașe cu întrebări structurate pe 6 niveluri de gândire. Citiți o poveste împreună (orice carte!), trageți un cartonaș și discutați răspunsurile copilului. Transformă lectura pasivă într-o conversație interactivă." },
-            { q: "Pentru ce categorie de vârstă sunt recomandate?", a: "Sunt ideale pentru copii între 6 și 11 ani (școala primară). Limbajul este adaptat pentru a fi clar, prietenos și ușor de înțeles, stimulând curiozitatea naturală a copilului." },
-            { q: "Trebuie să cumpăr o carte anume pentru a le folosi?", a: "Nu! Aceasta este frumusețea jocului. Întrebările sunt universale și pot fi aplicate pe orice text narativ: povești scrise, basme, lecturi școlare sau chiar desene animate." },
-            { q: "Cum ajută acest joc relația dintre părinte și copil?", a: "Jocul este un instrument puternic de conectare emoțională. Încurajează copilul să își exprime opiniile, sentimentele și valorile, oferind părintelui ocazia perfectă de a-l asculta fără a-l evalua sau corecta." },
-            { q: "Pot folosi cartonașele și la clasă dacă sunt învățător?", a: "Da, absolut! Cartonașele sunt instrumente excelente pentru activități de grup, orele de limba română sau cluburi de lectură, stimulând participarea activă și argumentarea colegială." },
-            { q: "Cât durează livrarea și cum se face?", a: "Livrarea este gratuită și se face rapid în toată România prin curier rapid sau la orice locker Sameday EasyBox, în termen de 1-3 zile lucrătoare." }
-          ].map((faq, i) => {
-            const isOpen = expandedFaq === i;
-            return (
-              <motion.div 
-                key={i} 
-                {...fadeInUp}
-                className={`bg-white rounded-3xl border border-orange-100/50 p-6 sm:p-8 transition-all duration-300 ${
-                  isOpen 
-                    ? 'shadow-lg shadow-orange-950/5 border-brand-orange/20' 
-                    : 'hover:shadow-md hover:shadow-orange-950/2'
-                }`}
-              >
-                <button 
-                  type="button"
-                  onClick={() => setExpandedFaq(isOpen ? null : i)}
-                  className="w-full flex justify-between items-center text-left font-serif font-bold text-lg text-text-main group hover:text-brand-orange transition-colors"
+          <div className="space-y-4">
+            {[
+              { q: "Pentru ce vârstă sunt cartonașele?", a: "Sunt recomandate copiilor între 6 și 11 ani. Limbajul este adaptat pentru a fi înțeles ușor de către ei." },
+              { q: "Trebuie să am o carte anume?", a: "Nu! Întrebările sunt universale și pot fi aplicate oricărui text narativ (povești, basme, lecturi școlare)." },
+              { q: "Cum se face livrarea?", a: "Livrăm prin curierat rapid sau la lockerele EasyBox în 1-3 zile lucrătoare." },
+              { q: "Pot primi factură pe firmă?", a: "Desigur. Te rugăm să ne trimiți datele de facturare după plasarea comenzii." }
+            ].map((faq, i) => {
+              const isOpen = expandedFaq === i;
+              return (
+                <motion.div 
+                  key={i} 
+                  {...fadeInUp}
+                  className="bg-white border-b border-orange-200/20 py-5"
                 >
-                  <span className="text-base sm:text-lg tracking-tight pr-4">{faq.q}</span>
-                  <motion.span 
-                    animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-brand-orange flex-shrink-0 bg-brand-orange-light/20 p-2 rounded-full group-hover:bg-brand-orange/10 transition-colors"
+                  <button 
+                    type="button"
+                    onClick={() => setExpandedFaq(isOpen ? null : i)}
+                    className="w-full flex justify-between items-center text-left font-serif font-bold text-lg text-text-main group hover:text-brand-orange py-2"
                   >
-                    <ChevronDown size={18} />
-                  </motion.span>
-                </button>
-                
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div 
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
+                    <span className="text-base sm:text-lg tracking-tight">{faq.q}</span>
+                    <motion.span 
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-brand-orange ml-4 flex-shrink-0"
                     >
-                      <p className="text-text-muted text-sm sm:text-base leading-relaxed font-light pt-4 border-t border-orange-100/20 mt-4 pr-2 sm:pr-4">
-                        {faq.a}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
+                      <ChevronDown size={20} />
+                    </motion.span>
+                  </button>
+                  
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-text-muted text-sm sm:text-base leading-relaxed font-light pt-3 pb-2 pr-6">
+                          {faq.a}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
-  </div>
-);
+      </section>
+    </div>
+  );
 }

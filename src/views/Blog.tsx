@@ -20,33 +20,33 @@ export default function Blog() {
   const posts = [
     {
       id: 1,
-      category: "Lectură",
+      category: "Conexiune",
       date: "12 Mai 2026",
       readTime: "5 min",
-      title: "Cum transformăm cititul dintr-o obligație într-o plăcere",
-      excerpt: "Dacă copilul tău refuză să citească, poate că abordarea e de vină. Câteva idei simple pentru a face din lectură un moment magic de conectare și joacă.",
+      title: "Cum să construiești o relație bazată pe încredere cu copilul tău",
+      excerpt: "Încrederea nu se câștigă peste noapte, ci prin gesturi mici, repetate zi de zi. Descoperă 5 moduri simple prin care poți întări legătura cu copilul tău.",
       author: "Oana",
-      imageUrl: "/cartonase-4.jpg"
+      imageUrl: "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 2,
       category: "Educație",
       date: "28 Apr 2026",
       readTime: "7 min",
-      title: "Conectare înainte de corectare – Filozofia din spatele proiectului",
-      excerpt: "Notele și performanța contează mai puțin decât siguranța emoțională. Află de ce copiii au nevoie de conectare pentru a putea învăța cu drag.",
+      title: "De ce copiii au nevoie de limite clare și blânde",
+      excerpt: "Limitele nu înseamnă pedepse, ci siguranță. Află cum să stabilești reguli clare în familie fără să folosești frica sau rușinea ca metode de disciplină.",
       author: "Oana",
-      imageUrl: "/oana.jpg"
+      imageUrl: "https://images.unsplash.com/photo-1545060130-c01503b41a01?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 3,
-      category: "Dezvoltare",
+      category: "Lectură",
       date: "15 Apr 2026",
-      readTime: "6 min",
-      title: "Cum dezvoltăm gândirea critică prin întrebări inteligente",
-      excerpt: "Trăim într-o lume plină de ecrane și informații. Descoperă cum antrenăm mintea copilului să gândească independent cu ajutorul taxonomiei Bloom.",
+      readTime: "4 min",
+      title: "Cum transformăm cititul dintr-o obligație într-o plăcere",
+      excerpt: "Dacă copilul tău refuză să citească, poate că abordarea e de vină. Câteva trucuri simple pentru a face din lectură cel mai așteptat moment al zilei.",
       author: "Oana",
-      imageUrl: "/cartonase-2.jpg"
+      imageUrl: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=800&auto=format&fit=crop"
     }
   ];
 
@@ -59,13 +59,13 @@ export default function Blog() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-left mb-20 border-b border-orange-100/40 pb-12 max-w-3xl"
+          className="text-center md:text-left flex flex-col items-center md:items-start mb-20 border-b border-orange-100/40 pb-12 max-w-3xl mx-auto md:mx-0"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-purple-light text-text-main border border-brand-purple/25 rounded-full text-xs font-semibold tracking-wider uppercase mb-5">
             <BookOpen size={12} /> Publicație bilunară
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-serif font-bold tracking-tight text-text-main mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-serif font-bold tracking-tight text-text-main mb-6 leading-tight">
             Blogul Povești <span className="font-light italic text-brand-orange">de-acasă</span>
           </h1>
           

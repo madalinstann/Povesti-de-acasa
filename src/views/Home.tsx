@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { BookOpen, Heart, Palette, Sparkles, ArrowRight, ShieldCheck, Truck, ChevronDown } from 'lucide-react';
+import { BookOpen, Heart, Palette, Sparkles, ArrowRight, HelpCircle, ShieldCheck, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -22,12 +22,16 @@ function Hero() {
     <section className="bg-[#FDF8F3] pt-12 pb-24 md:pt-20 md:pb-32 overflow-hidden relative">
       <div className="absolute top-0 right-0 w-2/3 h-full bg-[#FAF1E6] rounded-l-[5rem] -z-10 translate-x-20 md:translate-x-32" />
       
+      {/* Premium blurry background gradient orbs (mesh gradients) */}
+      <div className="absolute top-[10%] left-[10%] w-[30rem] h-[30rem] bg-brand-orange/15 rounded-full blur-[120px] -z-20 pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
+      <div className="absolute bottom-[20%] right-[10%] w-[25rem] h-[25rem] bg-brand-purple/20 rounded-full blur-[100px] -z-20 pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Main Headline taking up approx 60% with Bold Editorial look */}
           <motion.div 
-            className="lg:col-span-7 space-y-8 text-left z-10"
+            className="lg:col-span-7 space-y-8 text-center lg:text-left z-10 flex flex-col items-center lg:items-start"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -36,17 +40,17 @@ function Hero() {
               <Sparkles size={14} /> Educație cu suflet
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-[4.5rem] font-bold leading-[1.1] tracking-tight text-text-main">
-              Ajută-ți copilul să înțeleagă cu adevărat <span className="font-serif font-light italic text-brand-orange sm:block sm:mt-2">ce citește</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-text-main">
+              Fiecare carte citită poate deveni <span className="font-display text-[1.15em] text-brand-orange inline-block rotate-[-1.5deg] mx-1 align-middle">o amintire</span> între tine și copilul tău.
             </h1>
             
             <p className="text-base sm:text-lg text-text-muted max-w-xl font-light leading-relaxed">
-              Cartonașe și resurse care transformă lectura într-o aventură pentru tine și copilul tău.
+              Aici ai întrebările. Tu oferi timpul și dragostea.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }}>
-                <Link to="/shop" className="block bg-brand-orange hover:bg-orange-600 text-white font-semibold py-4 px-8 rounded-2xl text-center transition-all shadow-md shadow-orange-900/10 text-sm tracking-wider uppercase">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full justify-center lg:justify-start items-center lg:items-start">
+              <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+                <Link to="/shop" className="block bg-brand-orange hover:bg-orange-600 text-white font-semibold py-4.5 px-8 rounded-2xl text-center transition-all shadow-md shadow-orange-900/10 text-sm tracking-wider uppercase">
                   Descoperă Cartonașele
                 </Link>
               </motion.div>
@@ -63,12 +67,16 @@ function Hero() {
             <div className="absolute -inset-4 bg-brand-purple-light/50 rounded-[3.5rem] transform rotate-3 -z-10 shadow-inner" />
             <div className="absolute inset-0 bg-brand-orange-light/25 rounded-[3rem] transform -rotate-2 -z-10 scale-102" />
             
-            <div className="aspect-[4/3] sm:aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl shadow-orange-950/10 relative border-8 border-white bg-white p-6 sm:p-8 flex items-center justify-center">
-              <img 
-                src="/logo-mare.jpg" 
-                alt="Logo Povești de-acasă" 
-                className="w-full h-full object-contain transition-transform duration-700 hover:scale-105"
-              />
+            <div className="relative group">
+              {/* Glowing gradient back-border typical of premium design */}
+              <div className="absolute -inset-2 bg-gradient-to-tr from-brand-orange via-white to-brand-purple rounded-[3.2rem] opacity-35 blur-[8px] group-hover:opacity-45 transition-opacity duration-700 -z-10" />
+              <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl shadow-orange-950/10 relative border-8 border-white bg-white p-6 sm:p-8 flex items-center justify-center">
+                <img 
+                  src="/logo-povesti-de-acasa-2.png" 
+                  alt="Logo Povești de-acasă" 
+                  className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
             </div>
             
             {/* Soft decorative label element typical for editorial designs */}
@@ -110,7 +118,7 @@ function Features() {
   ];
 
   return (
-    <section className="py-24 bg-[#FAF1E6] border-y border-orange-100/40 overflow-hidden">
+    <section className="py-24 bg-[#FDFAF7] border-y border-orange-100/30 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Editorial Offset Title */}
@@ -135,10 +143,10 @@ function Features() {
           className="grid md:grid-cols-3 gap-8 md:gap-10 mt-8"
         >
           {features.map((f, i) => (
-            <motion.div
+            <motion.div 
               key={i}
               variants={fadeInUp}
-              className={`flex flex-col space-y-6 p-6 sm:p-8 lg:p-10 rounded-[2.5rem] bg-white border ${f.borderColor} shadow-sm hover:shadow-xl hover:shadow-orange-950/10 transition-all duration-500 hover:-translate-y-1`}
+              className={`flex flex-col space-y-6 p-8 sm:p-10 rounded-[2.5rem] bg-white/70 backdrop-blur-md border ${f.borderColor} shadow-sm hover:shadow-xl hover:shadow-orange-950/10 transition-all duration-500 hover:-translate-y-2 hover:bg-white`}
             >
               <div className={`w-14 h-14 rounded-2xl ${f.bgColor} flex items-center justify-center mb-2 shadow-inner`}>
                 {f.icon}
@@ -159,14 +167,14 @@ function Features() {
 
 function ProductPromo() {
   return (
-    <section className="py-24 md:py-32 bg-white border-b border-orange-100/30 overflow-hidden">
+    <section className="py-24 md:py-32 bg-[#FDF8F3] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
           {/* Asymmetrical Big Product Image with diagonal tiles - Bleeding style */}
           <motion.div 
             {...fadeInUp}
-            className="lg:col-span-6 order-2 lg:order-1 relative px-4 md:px-0"
+            className="lg:col-span-6 relative px-4 md:px-0"
           >
             <div className="absolute inset-0 bg-brand-orange-light/40 rounded-[3.5rem] transform -rotate-3 scale-102 -z-20" />
             <div className="absolute inset-0 bg-white rounded-[3rem] transform rotate-1 scale-102 -z-10 shadow-2xl shadow-orange-950/5 border border-orange-100/30" />
@@ -181,21 +189,21 @@ function ProductPromo() {
             
             {/* Design accents */}
             <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center text-white font-serif italic text-lg shadow-lg">
-              90
+              98
             </div>
           </motion.div>
           
           {/* Product details on the right side */}
           <motion.div 
             {...fadeInUp}
-            className="lg:col-span-6 order-1 lg:order-2 space-y-8"
+            className="lg:col-span-6 space-y-8"
           >
             <div>
               <span className="inline-block px-4 py-1.5 bg-brand-purple-light text-text-main border border-brand-purple/20 font-semibold rounded-full text-xs tracking-wider uppercase mb-5">
                 Joc Educațional
               </span>
               <h2 className="text-4xl sm:text-5xl font-bold leading-[1.1] tracking-tight mb-4 text-text-main">
-                Explorăm Povești – 90 de cartonașe pentru mințile curioase
+                Explorăm Povești – 98 de cartonașe pentru mințile curioase
               </h2>
               <p className="text-text-muted font-light text-base sm:text-lg leading-relaxed">
                 Un joc educațional care transformă orice poveste citită într-o conversație memorabilă – pentru copii de 6-11 ani, acasă și la clasă.
@@ -205,7 +213,7 @@ function ProductPromo() {
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 py-2 border-y border-orange-100/40 divide-y sm:divide-y-0 lg:divide-y divide-orange-100/20">
               {[
                 "Funcționează cu orice carte – nu trebuie să cumperi nimic altceva.",
-                "90 de întrebări pe 6 niveluri de gândire – de la simpla amintire până la reflecție și gândire critică.",
+                "98 de întrebări pe 6 niveluri de gândire – de la simpla amintire până la reflecție și gândire critică.",
                 "Acasă, la clasă sau în grup – se adaptează oricărui context.",
                 "Îl învață să gândească cu voce proprie – explică, argumentează și își susține ideile cu încredere."
               ].map((text, i) => (
@@ -249,8 +257,8 @@ function ProductPromo() {
 
 function About() {
   return (
-    <section id="despre" className="py-24 md:py-32 bg-white border-b border-orange-100/30 overflow-hidden text-center">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="despre" className="py-24 md:py-32 bg-white overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
         {/* Header centered */}
         <motion.div {...fadeInUp} className="mb-12">
@@ -260,50 +268,69 @@ function About() {
           </h2>
         </motion.div>
         
-        {/* Profile photo centered and larger */}
-        <motion.div
+        {/* Profile photo centered and styled with organic shapes */}
+        <motion.div 
           {...fadeInUp}
-          className="relative w-full max-w-[280px] h-[280px] sm:max-w-[420px] sm:h-[420px] mx-auto mb-12 sm:mb-16"
+          className="relative w-72 h-72 sm:w-96 sm:h-96 mx-auto mb-16 group"
         >
-          <div className="absolute -inset-4 bg-[#FDF8F3] rounded-[3.5rem] transform -rotate-3 -z-10 border border-orange-100 shadow-inner" />
-          <div className="absolute inset-0 bg-brand-orange-light/20 rounded-[3rem] transform rotate-2 -z-10 scale-102" />
+          {/* Elegant decorative background elements */}
+          <div className="absolute -inset-4 bg-[#FDF8F3] rounded-[3.5rem] transform -rotate-3 -z-10 border border-orange-100/70 shadow-inner" />
+          <div className="absolute inset-0 bg-brand-orange-light/10 rounded-[3rem] transform rotate-2 -z-10 scale-102" />
           
-          <div className="w-full h-full rounded-[3rem] overflow-hidden shadow-2xl relative border-8 border-white">
-            <img 
-              src="/oana.jpg" 
-              alt="Oana, fondatoare Povești de-acasă" 
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-            />
+          <div className="relative w-full h-full">
+            {/* Glowing gradient back-border typical of premium design */}
+            <div className="absolute -inset-2 bg-gradient-to-tr from-brand-orange/30 via-white to-brand-purple/20 rounded-[3.2rem] opacity-30 blur-[6px] group-hover:opacity-40 transition-opacity duration-700 -z-10" />
+            <div className="w-full h-full rounded-[3rem] overflow-hidden shadow-xl relative border-8 border-white bg-white">
+              <img 
+                src="/despre.mine.png" 
+                alt="Oana, fondatoare Povești de-acasă" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
           </div>
         </motion.div>
         
         {/* Bio statement text centered and beautifully styled */}
         <motion.div 
           {...fadeInUp} 
-          className="space-y-8 max-w-3xl mx-auto text-center"
+          className="space-y-8 max-w-2xl mx-auto text-left md:text-justify"
         >
-          <h3 className="font-serif italic font-semibold text-brand-orange text-2xl sm:text-3xl leading-snug">
-            Bine ai venit în lumea Povești de-acasă
+          <h3 className="font-serif font-bold text-text-main text-2xl sm:text-3xl lg:text-4xl leading-snug text-center mb-8">
+            Bine ai venit în lumea <span className="font-display font-semibold text-brand-orange text-3xl sm:text-4xl lg:text-5xl rotate-[-1deg] inline-block mx-1">Povești de-acasă</span>
           </h3>
           
           <div className="space-y-6 text-text-muted text-base sm:text-lg font-light leading-relaxed">
             <p>
-              Sunt Oana — învățătoare, mamă și un om care crede cu toată inima în puterea relației dintre copil și adultul care îl însoțește în creștere. De mai bine de 17 ani lucrez alături de copii și am descoperit că educația adevărată înseamnă conectare, încredere, siguranță și timp petrecut împreună.
+              Sunt Oana — învățătoare, mamă și un om care crede cu toată inima în puterea relației dintre copil și adultul care îl însoțește în creștere.
             </p>
             
             <p>
-              Cred cu tărie că un copil nu poate fi definit de o notă sau de dificultățile pe care le are. Fiecare copil are nevoie de un adult care să îi vadă valoarea și posibilitățile, înainte de orice etichetă. De aceea, am creat <span className="font-serif italic font-semibold text-brand-orange text-xl">Povești de-acasă</span> — din dorința de a transforma lectura într-un prilej de apropiere, conversație și descoperire emoțională.
+              De mai bine de 17 ani lucrez alături de copii și, în tot acest timp, am descoperit că educația adevărată nu înseamnă doar informații, performanță sau rezultate. Înseamnă conectare, încredere, siguranță și timp petrecut împreună. Înseamnă să îl ajuți pe copil să se simtă văzut, ascultat și înțeles.
             </p>
             
             <p>
-              Aici vei descoperi universul jocului „Explorăm povești”, un set de cartonașe creat pentru a antrena mințile curioase ale copiilor între 6 și 11 ani. În prezent, îmi continui formarea în consilierea parentală, pentru că îmi doresc să pot susține și mai profund familiile în călătoria lor frumoasă de creștere a copiilor.
+              Înseamnă, mai ales, să vezi potențialul din fiecare copil exact așa cum este el. Cred cu tărie că un copil nu poate fi definit de o notă sau de dificultățile pe care le are la o disciplină. Unii copii strălucesc mai târziu, diferit sau în alte direcții decât cele pe care școala le măsoară cel mai ușor. Iar atunci când un copil primește etichete înainte de a primi încredere, începe să creadă despre el că nu este suficient de bun. Eu cred că fiecare copil are nevoie, înainte de orice, de un adult care să îi vadă valoarea și posibilitățile.
+            </p>
+            
+            <p>
+              Am creat <span className="font-semibold text-text-main">Povești de-acasă</span> din dorința de a fi aproape atât de copii, cât și de părinți. Din dorința de a transforma lectura într-un prilej de apropiere, conversație și descoperire emoțională. Cred că poveștile pot deveni punți între oameni și că întrebările potrivite îi ajută pe copii nu doar să citească, ci să gândească, să simtă, să își exprime ideile și să își înțeleagă lumea interioară.
+            </p>
+            
+            <p>
+              Aici vei descoperi universul jocului „Explorăm povești”, un set de cartonașe creat pentru a transforma lectura într-o experiență de conectare, reflecție și dialog între copii și adulți. În același timp, îmi doresc ca acest spațiu să devină, treptat, un loc în care părinții să găsească sprijin, înțelegere și inspirație în frumoasa călătorie a creșterii copiilor.
+            </p>
+  
+            <p>
+              În prezent îmi continui formarea în domeniul consilierii parentale, pentru că îmi doresc să pot susține și mai profund familiile în provocările și frumusețea creșterii copiilor.
             </p>
           </div>
           
-          <div className="pt-6 max-w-2xl mx-auto">
-            <p className="border-t border-b border-orange-100/60 py-6 italic font-serif text-lg sm:text-xl text-[#5E4E45]">
+          <div className="pt-8 max-w-lg mx-auto text-center">
+            <div className="w-12 h-[1px] bg-brand-orange/30 mx-auto mb-6" />
+            <p className="italic font-serif text-lg sm:text-xl text-[#5E4E45] leading-relaxed">
               "Cred în educația cu blândețe, în puterea întrebărilor bune și în magia care apare atunci când un copil simte că este ascultat cu adevărat."
             </p>
+            <div className="w-12 h-[1px] bg-brand-orange/30 mx-auto mt-6" />
           </div>
         </motion.div>
         
@@ -332,7 +359,7 @@ function Testimonials() {
   ];
 
   return (
-    <section id="testimoniale" className="py-24 md:py-32 bg-[#FDF8F3] border-b border-orange-100/30 overflow-hidden text-center">
+    <section id="testimoniale" className="py-24 md:py-32 bg-[#FAF1E6]/40 border-t border-orange-100/30 overflow-hidden text-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header centered */}
@@ -377,82 +404,6 @@ function Testimonials() {
   );
 }
 
-function Faq() {
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
-  const faqs = [
-    { q: "Cum funcționează jocul „Explorăm Povești”?", a: "Jocul constă în 90 de cartonașe cu întrebări structurate pe 6 niveluri de gândire. Citiți o poveste împreună (orice carte!), trageți un cartonaș și discutați răspunsurile copilului. Transformă lectura pasivă într-o conversație interactivă." },
-    { q: "Pentru ce categorie de vârstă sunt recomandate?", a: "Sunt ideale pentru copii între 6 și 11 ani (școala primară). Limbajul este adaptat pentru a fi clar, prietenos și ușor de înțeles, stimulând curiozitatea naturală a copilului." },
-    { q: "Trebuie să cumpăr o carte anume pentru a le folosi?", a: "Nu! Aceasta este frumusețea jocului. Întrebările sunt universale și pot fi aplicate pe orice text narativ: povești scrise, basme, lecturi școlare sau chiar desene animate." },
-    { q: "Cum ajută acest joc relația dintre părinte și copil?", a: "Jocul este un instrument puternic de conectare emoțională. Încurajează copilul să își exprime opiniile, sentimentele și valorile, oferind părintelui ocazia perfectă de a-l asculta fără a-l evalua sau corecta." },
-    { q: "Pot folosi cartonașele și la clasă dacă sunt învățător?", a: "Da, absolut! Cartonașele sunt instrumente excelent construite pentru activități de grup, orele de limba română sau cluburi de lectură, stimulând participarea activă și argumentarea colegială." },
-    { q: "Cât durează livrarea și cum se face?", a: "Livrarea este gratuită și se face rapid în toată România prin curier rapid sau la orice locker Sameday EasyBox, în termen de 1-3 zile lucrătoare." }
-  ];
-
-  return (
-    <section className="py-24 md:py-32 bg-[#FAF1E6]/60">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <motion.div {...fadeInUp} className="text-center mb-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-orange block mb-2">Informații Utile</span>
-          <h2 className="text-3xl md:text-4xl font-bold relative inline-block text-text-main font-serif">
-            Ai întrebări?
-          </h2>
-          <div className="w-16 h-0.5 bg-brand-orange mx-auto mt-4" />
-        </motion.div>
-        
-        <div className="space-y-4 sm:space-y-6">
-          {faqs.map((faq, i) => {
-            const isOpen = expandedFaq === i;
-            return (
-              <motion.div 
-                key={i} 
-                {...fadeInUp}
-                className={`bg-white rounded-3xl border border-orange-100/50 p-6 sm:p-8 transition-all duration-300 ${
-                  isOpen 
-                    ? 'shadow-lg shadow-orange-950/5 border-brand-orange/20' 
-                    : 'hover:shadow-md hover:shadow-orange-950/2'
-                }`}
-              >
-                <button 
-                  type="button"
-                  onClick={() => setExpandedFaq(isOpen ? null : i)}
-                  className="w-full flex justify-between items-center text-left font-serif font-bold text-lg text-text-main group hover:text-brand-orange transition-colors"
-                >
-                  <span className="text-base sm:text-lg tracking-tight pr-4">{faq.q}</span>
-                  <motion.span 
-                    animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-brand-orange flex-shrink-0 bg-brand-orange-light/20 p-2 rounded-full group-hover:bg-brand-orange/10 transition-colors"
-                  >
-                    <ChevronDown size={18} />
-                  </motion.span>
-                </button>
-                
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div 
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="text-text-muted text-sm sm:text-base leading-relaxed font-light pt-4 border-t border-orange-100/20 mt-4 pr-2 sm:pr-4">
-                        {faq.a}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function Home() {
   return (
     <div className="w-full overflow-hidden bg-[#FDF8F3]">
@@ -461,7 +412,6 @@ export default function Home() {
       <ProductPromo />
       <Testimonials />
       <About />
-      <Faq />
     </div>
   );
 }

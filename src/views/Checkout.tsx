@@ -56,7 +56,7 @@ export default function Checkout() {
             </div>
             <div className="flex justify-between">
               <span>Total plată:</span>
-              <span className="font-semibold text-brand-orange">49 lei (Ramburs)</span>
+              <span className="font-semibold text-brand-orange">99 lei (Ramburs)</span>
             </div>
           </div>
 
@@ -87,9 +87,9 @@ export default function Checkout() {
         <div className="grid md:grid-cols-12 gap-8 items-start">
           
           {/* Form container - 7 cols */}
-          <motion.div
+          <motion.div 
             {...fadeInUp}
-            className="md:col-span-7 order-2 md:order-1 bg-white p-6 sm:p-10 rounded-[2.5rem] shadow-xl shadow-orange-950/5 border border-orange-100/30"
+            className="md:col-span-7 bg-white p-8 sm:p-10 rounded-[2.5rem] shadow-xl shadow-orange-950/5 border border-orange-100/30"
           >
             <h1 className="text-3xl font-serif font-bold text-text-main mb-6 text-left">
               Finalizează comanda
@@ -217,7 +217,7 @@ export default function Checkout() {
                 type="submit" 
                 className="w-full bg-[#3D2B1F] hover:bg-brand-orange text-white font-semibold py-5 rounded-2xl transition-all shadow-md shadow-orange-950/15 text-sm tracking-wider uppercase mt-4"
               >
-                Confirmă comanda — 49 lei
+                Confirmă comanda — 99 lei
               </motion.button>
               
               <div className="text-center text-[10px] sm:text-xs text-text-muted/70 flex items-center justify-center gap-2 pt-2 border-t border-orange-100/30">
@@ -227,9 +227,9 @@ export default function Checkout() {
           </motion.div>
 
           {/* Cart summary container - 5 cols */}
-          <motion.div
+          <motion.div 
             {...fadeInUp}
-            className="md:col-span-5 order-1 md:order-2 space-y-6"
+            className="md:col-span-5 space-y-6"
           >
             <div className="bg-[#FAF1E6] p-8 rounded-[2.5rem] border border-orange-100/30 text-left space-y-6">
               <h3 className="font-serif italic text-2xl font-bold text-brand-orange border-b border-orange-200/30 pb-4">
@@ -242,17 +242,17 @@ export default function Checkout() {
                 </div>
                 <div>
                   <h4 className="font-serif font-bold text-text-main text-sm">Explorăm Povești</h4>
-                  <p className="text-xs text-text-muted">90 cartonașe de conectare</p>
+                  <p className="text-xs text-text-muted">98 cartonașe de conectare</p>
                 </div>
                 <div className="ml-auto font-serif text-brand-orange font-bold">
-                  49 lei
+                  99 lei
                 </div>
               </div>
               
               <div className="border-t border-orange-200/30 pt-6 space-y-3 text-sm">
                 <div className="flex justify-between text-text-muted">
                   <span>Subtotal:</span>
-                  <span>49 lei</span>
+                  <span>99 lei</span>
                 </div>
                 <div className="flex justify-between text-text-muted">
                   <span>Livrare:</span>
@@ -260,7 +260,7 @@ export default function Checkout() {
                 </div>
                 <div className="flex justify-between text-base font-serif font-bold text-text-main border-t border-orange-200/20 pt-4 mt-2">
                   <span>Total de plată:</span>
-                  <span className="text-brand-orange text-xl">49 lei</span>
+                  <span className="text-brand-orange text-xl">99 lei</span>
                 </div>
               </div>
             </div>
