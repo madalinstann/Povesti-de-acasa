@@ -15,6 +15,18 @@ export default function Footer() {
           </p>
         </div>
 
+        <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-3">
+          <h4 className="text-xs uppercase tracking-widest font-semibold text-orange-200/50">
+            Meniu
+          </h4>
+          <div className="flex flex-col space-y-2 text-sm text-orange-100/70 font-light">
+            <Link to="/galerie" className="hover:text-white transition-colors">Galerie Foto</Link>
+            <Link to="/shop" className="hover:text-white transition-colors">Shop</Link>
+            <Link to="/blog" className="hover:text-white transition-colors">Blog</Link>
+            <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
+          </div>
+        </div>
+
         <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-4">
           <h4 className="text-xs uppercase tracking-widest font-semibold text-orange-200/50">
             Urmărește-ne pe rețelele de socializare

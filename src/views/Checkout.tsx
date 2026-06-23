@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, ArrowLeft, CheckCircle, Truck, MapPin } from 'lucide-react';
+import { ShieldCheck, ArrowLeft, CheckCircle, Truck, MapPin, AlertCircle } from 'lucide-react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -12,6 +12,8 @@ const fadeInUp = {
 export default function Checkout() {
   const [deliveryMethod, setDeliveryMethod] = useState<'courier' | 'easybox'>('courier');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,10 +22,45 @@ export default function Checkout() {
     easyboxName: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate API call
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: `Comandă Nouă de la ${formData.name}`,
+          from_name: "Povești de Acasă Magazin",
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          delivery_method: deliveryMethod === 'courier' ? 'Curier Rapid' : 'EasyBox Sameday',
+          delivery_details: deliveryMethod === 'courier' ? formData.address : formData.easyboxName,
+          order_items: "Set Cartonașe 'Explorăm Povești' - 90 cartonașe (49 lei, Livrare Gratuită, Ramburs)"
+        })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setIsSubmitted(true);
+      } else {
+        setSubmitError(result.message || "A apărut o problemă la trimiterea comenzii. Te rugăm să încerci din nou.");
+      }
+    } catch (error) {
+      console.error("Eroare trimitere comanda:", error);
+      setSubmitError("A apărut o eroare de conexiune. Te rugăm să verifici conexiunea și să încerci din nou.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -210,14 +247,30 @@ export default function Checkout() {
                 )}
               </AnimatePresence>
 
+              {/* Error Alert */}
+              <AnimatePresence>
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl flex items-center gap-3 text-sm text-left"
+                  >
+                    <AlertCircle size={20} className="flex-shrink-0" />
+                    <span>{submitError}</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* Confirm command button */}
               <motion.button 
-                whileHover={{ scale: 1.01, y: -2 }}
-                whileTap={{ scale: 0.99 }}
+                whileHover={isSubmitting ? {} : { scale: 1.01, y: -2 }}
+                whileTap={isSubmitting ? {} : { scale: 0.99 }}
                 type="submit" 
-                className="w-full bg-[#3D2B1F] hover:bg-brand-orange text-white font-semibold py-5 rounded-2xl transition-all shadow-md shadow-orange-950/15 text-sm tracking-wider uppercase mt-4"
+                disabled={isSubmitting}
+                className="w-full bg-[#3D2B1F] hover:bg-brand-orange disabled:bg-gray-400 text-white font-semibold py-5 rounded-2xl transition-all shadow-md shadow-orange-950/15 text-sm tracking-wider uppercase mt-4 flex items-center justify-center gap-2"
               >
-                Confirmă comanda — 49 lei
+                {isSubmitting ? 'Se trimite comanda...' : 'Confirmă comanda — 49 lei'}
               </motion.button>
               
               <div className="text-center text-[10px] sm:text-xs text-text-muted/70 flex items-center justify-center gap-2 pt-2 border-t border-orange-100/30">
