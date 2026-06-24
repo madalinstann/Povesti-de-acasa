@@ -11,7 +11,6 @@ export default function Navbar() {
     { name: 'Acasă', path: '/' },
     { name: 'Testimoniale', path: '/#testimoniale' },
     { name: 'Despre mine', path: '/#despre' },
-    { name: 'Galerie', path: '/galerie' },
     { name: 'Shop', path: '/shop' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },

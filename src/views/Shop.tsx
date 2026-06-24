@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Package, ShieldCheck, Truck, ChevronDown, CheckCircle, HelpCircle, Sparkles } from 'lucide-react';
+import { Package, ShieldCheck, Truck, ChevronDown, CheckCircle, HelpCircle, Sparkles, X, ZoomIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const fadeInUp = {
@@ -14,12 +14,22 @@ export default function Shop() {
   const navigate = useNavigate();
   const [activeImage, setActiveImage] = useState(0);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   const images = [
     "/cartonase-1.jpg",
     "/cartonase-2.jpg",
     "/cartonase-3.jpg",
     "/cartonase-4.jpg"
+  ];
+
+  const galleryImages = [
+    { id: 1, src: "/gallery-family-1.jpg", alt: "Mamă și copil citind împreună într-un decor cald" },
+    { id: 2, src: "/gallery-family-2.jpg", alt: "Familie fericită citind o carte de povești românești" },
+    { id: 3, src: "/gallery-family-3.jpg", alt: "Copil citind relaxat în colțul lui de lectură" },
+    { id: 4, src: "/gallery-family-4.jpg", alt: "Mamă și fiică citind o carte înainte de culcare" },
+    { id: 5, src: "/gallery-family-5.jpg", alt: "Frate și soră citind pe covor în sufragerie" },
+    { id: 6, src: "/gallery-family-6.jpg", alt: "Tată citind o poveste fiicei sale pe fotoliu" },
   ];
 
   return (
@@ -249,6 +259,92 @@ export default function Shop() {
           </div>
         </div>
       </section>
+
+      {/* Premium Gallery Section */}
+      <section className="py-24 bg-[#FDF8F3] border-t border-orange-100/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <motion.div {...fadeInUp} className="text-center mb-16 max-w-2xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-orange block mb-2">Momente de Conectare</span>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif text-text-main leading-tight">
+              Povești create în fiecare casă
+            </h2>
+            <div className="w-16 h-0.5 bg-brand-orange-light mx-auto mt-4 mb-6" />
+            <p className="text-text-muted font-light text-sm sm:text-base leading-relaxed">
+              Descoperă atmosfera caldă a lecturii în familie. Fiecare moment de citit împreună clădește o conexiune puternică și amintiri pentru o viață.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {galleryImages.map((img) => (
+              <motion.div
+                key={img.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: img.id * 0.05 }}
+                className="group relative cursor-pointer bg-white p-4 rounded-[2rem] border border-orange-100/30 shadow-sm hover:shadow-xl hover:shadow-orange-950/5 transition-all duration-500 flex flex-col"
+                onClick={() => setSelectedImage(img.src)}
+              >
+                <div className="aspect-[3/2] w-full rounded-2xl overflow-hidden bg-gray-50 relative group">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-brand-orange/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <motion.div 
+                      whileHover={{ scale: 1.1 }}
+                      className="bg-white p-4 rounded-full text-brand-orange shadow-lg"
+                    >
+                      <ZoomIn size={20} />
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-[#1e130c]/90 flex items-center justify-center p-4 backdrop-blur-sm"
+            onClick={() => setSelectedImage(null)}
+          >
+            {/* Close Button */}
+            <button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 text-white hover:text-brand-orange p-3 rounded-full bg-white/5 hover:bg-white/10 transition-all border border-white/10 cursor-pointer"
+            >
+              <X size={24} />
+            </button>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="max-w-4xl w-full max-h-[90vh] bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="w-full h-full bg-gray-50 flex items-center justify-center">
+                <img
+                  src={selectedImage}
+                  alt="Vizualizare imagine"
+                  className="w-full h-auto max-h-[80vh] object-contain"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
 
       {/* FAQ Section (Elegant Animated Accordion) */}
