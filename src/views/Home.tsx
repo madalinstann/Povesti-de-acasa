@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BookOpen, Heart, Palette, Sparkles, ArrowRight, HelpCircle, ShieldCheck, Truck } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '../router';
 import { motion } from 'motion/react';
 
 const fadeInUp = {
@@ -342,19 +342,19 @@ function About() {
 function Testimonials() {
   const reviews = [
     {
-      quote: "Cartonașele Oanei au schimbat complet seara de lectură în familia noastră. Copiii nu doar că ascultă atenți, dar de-abia așteaptă să tragem câte un cartonaș ca să dezbatem ce ar fi făcut ei în locul personajelor. Recomand din tot sufletul!",
-      author: "Elena Vasilescu",
-      info: "Mamă a doi copii (7 și 9 ani)"
+      quote: "Copilul nu doar răspunde la întrebări, ci învață să explice ce a înțeles, să compare idei și să se întoarcă la text cu mai multă atenție.",
+      author: "Înțelegere",
+      info: "lectură activă"
     },
     {
-      quote: "Este uimitor cum un set de întrebări atât de bine gândite poate deschide conversații atât de profunde cu un copil de 8 ani. Îl ajută foarte mult să își exprime emoțiile și să gândească critic. Un produs excepțional realizat cu mult suflet.",
-      author: "Andrei Popescu",
-      info: "Tată (8 ani)"
+      quote: "Întrebările despre personaje și alegeri îl ajută pe copil să vorbească despre emoții într-un mod firesc, pornind de la poveste.",
+      author: "Conectare",
+      info: "dialog cu adultul"
     },
     {
-      quote: "Le folosesc atât acasă cu fiica mea, cât și la clasă cu elevii mei. Întrebările sunt structurate extraordinar de bine pe nivelurile de înțelegere. Copiii sunt stimulați să argumenteze și să aibă încredere în propriile lor idei.",
-      author: "Raluca Marin",
-      info: "Mamă și învățătoare"
+      quote: "Cartonașele pot fi folosite cu povești, basme, lecturi școlare sau texte citite împreună, fără materiale suplimentare complicate.",
+      author: "Flexibilitate",
+      info: "acasă sau la clasă"
     }
   ];
 
@@ -364,9 +364,9 @@ function Testimonials() {
         
         {/* Header centered */}
         <motion.div {...fadeInUp} className="mb-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-orange block mb-2">Gânduri de la Părinți</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-brand-orange block mb-2">Utilizare Practică</span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-text-main font-serif">
-            Testimoniale
+            Cum ajută cartonașele
           </h2>
           <div className="w-16 h-0.5 bg-brand-orange mx-auto mt-4" />
         </motion.div>

@@ -1,5 +1,5 @@
 import { Instagram, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '../router';
 
 const Tiktok = ({ size = 18 }: { size?: number }) => (
   <svg

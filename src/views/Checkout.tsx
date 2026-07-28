@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Link } from 'react-router-dom';
+import { Link } from '../router';
 import { ShieldCheck, ArrowLeft, CheckCircle, Truck, MapPin, AlertCircle } from 'lucide-react';
 
 const fadeInUp = {

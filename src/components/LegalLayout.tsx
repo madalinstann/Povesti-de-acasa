@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../router';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 

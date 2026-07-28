@@ -1,7 +1,6 @@
 import LegalLayout from '../components/LegalLayout';
 
 const h2 = 'text-xl sm:text-2xl font-serif font-bold text-text-main mt-10 mb-3';
-const note = 'bg-brand-orange-light/40 text-[#8A4B2A] px-1.5 py-0.5 rounded font-medium';
 
 export default function Terms() {
   return (
@@ -13,8 +12,9 @@ export default function Terms() {
 
       <h2 className={h2}>1. Date vânzător</h2>
       <p>
-        Datele juridice ale vânzătorului vor fi completate înainte de lansarea comercială oficială:
-        <span className={note}> denumire legală / PFA / SRL, CUI, sediu, email și telefon</span>.
+        Site-ul este administrat pentru brandul „Povești de-acasă”. Pentru întrebări despre produs,
+        comandă, livrare sau retur, folosește adresa de email și numărul de telefon afișate în
+        pagina de Contact.
       </p>
 
       <h2 className={h2}>2. Produs și preț</h2>
@@ -44,8 +44,8 @@ export default function Terms() {
 
       <h2 className={h2}>6. Retur</h2>
       <p>
-        Condițiile finale de retur vor fi completate înainte de lansarea comercială oficială,
-        conform legislației aplicabile comerțului online.
+        Returul și eventualele neclarități se discută direct cu vânzătorul după confirmarea
+        comenzii, conform legislației aplicabile comerțului online.
       </p>
 
       <h2 className={h2}>7. Contact</h2>

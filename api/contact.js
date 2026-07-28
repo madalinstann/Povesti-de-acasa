@@ -34,47 +34,56 @@ async function sendEmail({ to, from, replyTo, subject, html }) {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, message: 'Metodă nepermisă.' });
+  try {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ success: false, message: 'Metodă nepermisă.' });
+    }
+
+    if (!process.env.RESEND_API_KEY) {
+      return res.status(500).json({ success: false, message: 'Serviciul de email nu este configurat.' });
+    }
+
+    const toEmail = process.env.CONTACT_TO_EMAIL || process.env.ORDER_TO_EMAIL;
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'Povești de Acasă <onboarding@resend.dev>';
+
+    if (!toEmail) {
+      return res.status(500).json({ success: false, message: 'Adresa de contact nu este configurată.' });
+    }
+
+    const { name = '', email = '', phone = '', message = '' } = req.body || {};
+    const cleanName = String(name).trim();
+    const cleanEmail = String(email).trim();
+    const cleanPhone = String(phone).trim();
+    const cleanMessage = String(message).trim();
+
+    if (!cleanName || !cleanEmail || !cleanMessage) {
+      return res.status(400).json({ success: false, message: 'Completează numele, emailul și mesajul.' });
+    }
+
+    const safe = {
+      name: escapeHtml(cleanName),
+      email: escapeHtml(cleanEmail),
+      phone: escapeHtml(cleanPhone || '—'),
+      message: escapeHtml(cleanMessage),
+    };
+
+    await sendEmail({
+      to: [toEmail],
+      from: fromEmail,
+      replyTo: cleanEmail,
+      subject: `Mesaj nou — ${cleanName}`,
+      html: `
+        <h2>Mesaj nou — Povești de Acasă</h2>
+        <p><strong>Nume:</strong> ${safe.name}</p>
+        <p><strong>Email:</strong> ${safe.email}</p>
+        <p><strong>Telefon:</strong> ${safe.phone}</p>
+        <p><strong>Mesaj:</strong><br>${safe.message.replaceAll('\n', '<br>')}</p>
+      `,
+    });
+
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Contact email failed:', error);
+    return res.status(502).json({ success: false, message: 'Mesajul nu a putut fi trimis acum. Te rugăm să folosești WhatsApp sau emailul afișat pe site.' });
   }
-
-  if (!process.env.RESEND_API_KEY) {
-    return res.status(500).json({ success: false, message: 'RESEND_API_KEY lipsește din configurare.' });
-  }
-
-  const toEmail = process.env.CONTACT_TO_EMAIL || process.env.ORDER_TO_EMAIL;
-  const fromEmail = process.env.RESEND_FROM_EMAIL || 'Povești de Acasă <onboarding@resend.dev>';
-
-  if (!toEmail) {
-    return res.status(500).json({ success: false, message: 'CONTACT_TO_EMAIL lipsește din configurare.' });
-  }
-
-  const { name = '', email = '', phone = '', message = '' } = req.body || {};
-
-  if (!name || !email || !message) {
-    return res.status(400).json({ success: false, message: 'Completează numele, emailul și mesajul.' });
-  }
-
-  const safe = {
-    name: escapeHtml(name),
-    email: escapeHtml(email),
-    phone: escapeHtml(phone || '—'),
-    message: escapeHtml(message),
-  };
-
-  await sendEmail({
-    to: [toEmail],
-    from: fromEmail,
-    replyTo: email,
-    subject: `Mesaj nou — ${name}`,
-    html: `
-      <h2>Mesaj nou — Povești de Acasă</h2>
-      <p><strong>Nume:</strong> ${safe.name}</p>
-      <p><strong>Email:</strong> ${safe.email}</p>
-      <p><strong>Telefon:</strong> ${safe.phone}</p>
-      <p><strong>Mesaj:</strong><br>${safe.message.replaceAll('\n', '<br>')}</p>
-    `,
-  });
-
-  return res.status(200).json({ success: true });
 }

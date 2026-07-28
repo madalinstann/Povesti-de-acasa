@@ -1,7 +1,6 @@
 import LegalLayout from '../components/LegalLayout';
 
 const h2 = 'text-xl sm:text-2xl font-serif font-bold text-text-main mt-10 mb-3';
-const note = 'bg-brand-orange-light/40 text-[#8A4B2A] px-1.5 py-0.5 rounded font-medium';
 
 export default function Privacy() {
   return (
@@ -13,8 +12,8 @@ export default function Privacy() {
 
       <h2 className={h2}>1. Operatorul datelor</h2>
       <p>
-        Datele juridice ale operatorului vor fi completate înainte de lansarea comercială oficială:
-        <span className={note}> denumire legală / PFA / SRL, CUI, sediu și email de contact</span>.
+        Datele sunt administrate pentru brandul „Povești de-acasă”. Pentru întrebări legate de
+        prelucrarea datelor, folosește adresa de email afișată în pagina de Contact.
       </p>
 
       <h2 className={h2}>2. Date colectate</h2>

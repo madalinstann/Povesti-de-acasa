@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../router';
 import { Package, ShieldCheck, Truck, ChevronDown, CheckCircle, HelpCircle, Sparkles, X, ZoomIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
