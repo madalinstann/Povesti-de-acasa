@@ -5,8 +5,6 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './views/Home';
 import Shop from './views/Shop';
-import Blog from './views/Blog';
-import BlogPost from './views/BlogPost';
 import Checkout from './views/Checkout';
 import Contact from './views/Contact';
 import Terms from './views/Terms';
@@ -53,8 +51,6 @@ function CurrentPage() {
 
   if (pathname === '/') return <AnimatedPage><Home /></AnimatedPage>;
   if (pathname === '/shop') return <AnimatedPage variant="slide"><Shop /></AnimatedPage>;
-  if (pathname === '/blog') return <AnimatedPage variant="slide"><Blog /></AnimatedPage>;
-  if (pathname.startsWith('/blog/')) return <AnimatedPage variant="slide"><BlogPost /></AnimatedPage>;
   if (pathname === '/checkout') return <AnimatedPage variant="slide"><Checkout /></AnimatedPage>;
   if (pathname === '/contact') return <AnimatedPage><Contact /></AnimatedPage>;
   if (pathname === '/termeni' || pathname === '/termeni-si-conditii') return <AnimatedPage><Terms /></AnimatedPage>;

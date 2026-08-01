@@ -9,10 +9,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Acasă', path: '/' },
-    { name: 'Cum ajută', path: '/#testimoniale' },
-    { name: 'Despre mine', path: '/#despre' },
     { name: 'Shop', path: '/shop' },
-    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ];
 

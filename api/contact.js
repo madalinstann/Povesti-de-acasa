@@ -9,7 +9,11 @@ function escapeHtml(value = '') {
     .replaceAll("'", '&#039;');
 }
 
-async function sendEmail({ to, from, replyTo, subject, html }) {
+function isEmail(value = '') {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim());
+}
+
+async function sendEmail({ to, from, replyTo, subject, html, text }) {
   const response = await fetch(RESEND_API_URL, {
     method: 'POST',
     headers: {
@@ -22,6 +26,7 @@ async function sendEmail({ to, from, replyTo, subject, html }) {
       reply_to: replyTo,
       subject,
       html,
+      text,
     }),
   });
 
@@ -50,7 +55,11 @@ export default async function handler(req, res) {
       return res.status(500).json({ success: false, message: 'Adresa de contact nu este configurată.' });
     }
 
-    const { name = '', email = '', phone = '', message = '' } = req.body || {};
+    const { name = '', email = '', phone = '', message = '', website = '' } = req.body || {};
+    if (String(website).trim()) {
+      return res.status(200).json({ success: true });
+    }
+
     const cleanName = String(name).trim();
     const cleanEmail = String(email).trim();
     const cleanPhone = String(phone).trim();
@@ -58,6 +67,10 @@ export default async function handler(req, res) {
 
     if (!cleanName || !cleanEmail || !cleanMessage) {
       return res.status(400).json({ success: false, message: 'Completează numele, emailul și mesajul.' });
+    }
+
+    if (!isEmail(cleanEmail)) {
+      return res.status(400).json({ success: false, message: 'Te rugăm să verifici adresa de email.' });
     }
 
     const safe = {
@@ -73,12 +86,26 @@ export default async function handler(req, res) {
       replyTo: cleanEmail,
       subject: `Mesaj nou — ${cleanName}`,
       html: `
-        <h2>Mesaj nou — Povești de Acasă</h2>
-        <p><strong>Nume:</strong> ${safe.name}</p>
-        <p><strong>Email:</strong> ${safe.email}</p>
-        <p><strong>Telefon:</strong> ${safe.phone}</p>
-        <p><strong>Mesaj:</strong><br>${safe.message.replaceAll('\n', '<br>')}</p>
+        <div style="font-family: Arial, sans-serif; color: #2B1B15; line-height: 1.5;">
+          <h2 style="margin: 0 0 16px;">Mesaj nou - Povești de Acasă</h2>
+          <p><strong>Nume:</strong> ${safe.name}</p>
+          <p><strong>Email:</strong> ${safe.email}</p>
+          <p><strong>Telefon:</strong> ${safe.phone}</p>
+          <div style="background: #FAF1E6; border: 1px solid #F1DCC8; border-radius: 14px; padding: 16px; margin-top: 16px;">
+            <p style="margin: 0 0 8px;"><strong>Mesaj</strong></p>
+            <p style="margin: 0; white-space: pre-line;">${safe.message}</p>
+          </div>
+        </div>
       `,
+      text: [
+        'Mesaj nou - Povești de Acasă',
+        '',
+        `Nume: ${cleanName}`,
+        `Email: ${cleanEmail}`,
+        `Telefon: ${cleanPhone || '-'}`,
+        '',
+        cleanMessage,
+      ].join('\n'),
     });
 
     return res.status(200).json({ success: true });

@@ -42,17 +42,6 @@ export function useNavigate() {
   return navigate;
 }
 
-export function useParams<T extends Record<string, string | undefined> = Record<string, string | undefined>>() {
-  const { pathname } = useLocation();
-  const params: Record<string, string | undefined> = {};
-
-  if (pathname.startsWith('/blog/')) {
-    params.id = decodeURIComponent(pathname.replace('/blog/', '').split('/')[0] || '');
-  }
-
-  return params as T;
-}
-
 type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   to: string;
   children: ReactNode;

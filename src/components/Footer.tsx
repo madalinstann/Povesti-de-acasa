@@ -35,8 +35,8 @@ export default function Footer() {
             Meniu
           </h4>
           <div className="flex flex-col space-y-2.5 text-sm text-white/90 font-normal">
+            <Link to="/" className="hover:text-brand-orange transition-colors duration-300">Acasă</Link>
             <Link to="/shop" className="hover:text-brand-orange transition-colors duration-300">Shop</Link>
-            <Link to="/blog" className="hover:text-brand-orange transition-colors duration-300">Blog</Link>
             <Link to="/contact" className="hover:text-brand-orange transition-colors duration-300">Contact</Link>
           </div>
         </div>

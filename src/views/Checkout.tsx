@@ -19,7 +19,15 @@ export default function Checkout() {
     email: '',
     phone: '',
     address: '',
+    city: '',
+    county: '',
+    postalCode: '',
     easyboxName: '',
+    easyboxCity: '',
+    easyboxCounty: '',
+    easyboxAddress: '',
+    notes: '',
+    website: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,7 +47,21 @@ export default function Checkout() {
           email: formData.email,
           phone: formData.phone,
           deliveryMethod: deliveryMethod === 'courier' ? 'Curier rapid' : 'EasyBox Sameday',
-          deliveryDetails: deliveryMethod === 'courier' ? formData.address : formData.easyboxName,
+          deliveryDetails: deliveryMethod === 'courier'
+            ? [
+                `Adresă: ${formData.address}`,
+                `Localitate: ${formData.city}`,
+                `Județ/Sector: ${formData.county}`,
+                formData.postalCode ? `Cod poștal: ${formData.postalCode}` : '',
+              ].filter(Boolean).join('\n')
+            : [
+                `EasyBox: ${formData.easyboxName}`,
+                `Localitate: ${formData.easyboxCity}`,
+                `Județ/Sector: ${formData.easyboxCounty}`,
+                formData.easyboxAddress ? `Adresă/reper locker: ${formData.easyboxAddress}` : '',
+              ].filter(Boolean).join('\n'),
+          notes: formData.notes,
+          website: formData.website,
           orderItems: "Set Cartonașe «Explorăm Povești» — 98 cartonașe",
           total: '99 lei — ramburs'
         })
@@ -80,18 +102,26 @@ export default function Checkout() {
             Îți mulțumim, <span className="font-semibold text-text-main">{formData.name}</span>! Cererea ta pentru setul de cartonașe „Explorăm Povești” a fost trimisă cu succes. Te vom contacta în curând pentru confirmare și livrare.
           </p>
 
-          <div className="bg-[#FAF1E6] p-5 rounded-2xl border border-orange-100/50 text-xs text-text-muted space-y-2">
+            <div className="bg-[#FAF1E6] p-5 rounded-2xl border border-orange-100/50 text-xs text-text-muted space-y-2">
             <div className="flex justify-between">
               <span>Metodă livrare:</span>
               <span className="font-semibold text-text-main">
                 {deliveryMethod === 'courier' ? 'Curier Rapid' : 'Sameday EasyBox'}
               </span>
             </div>
-            <div className="flex justify-between">
-              <span>Total plată:</span>
-              <span className="font-semibold text-brand-orange">99 lei (Ramburs)</span>
+              <div className="flex justify-between">
+                <span>Total plată:</span>
+                <span className="font-semibold text-brand-orange">99 lei (Ramburs)</span>
+              </div>
+              <div className="text-left pt-3 border-t border-orange-100/60">
+                <span className="block text-text-muted mb-1">Detalii livrare trimise:</span>
+                <span className="block font-semibold text-text-main whitespace-pre-line">
+                  {deliveryMethod === 'courier'
+                    ? `${formData.address}\n${formData.city}, ${formData.county}${formData.postalCode ? `, ${formData.postalCode}` : ''}`
+                    : `${formData.easyboxName}\n${formData.easyboxCity}, ${formData.easyboxCounty}${formData.easyboxAddress ? `\n${formData.easyboxAddress}` : ''}`}
+                </span>
+              </div>
             </div>
-          </div>
 
           <div className="pt-4">
             <Link 
@@ -129,11 +159,22 @@ export default function Checkout() {
             </h1>
             
             <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.website}
+                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                className="hidden"
+                aria-hidden="true"
+              />
+
               <div className="space-y-2 text-left">
                 <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Nume complet</label>
                 <input 
                   type="text" 
                   required
+                  autoComplete="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Numele și prenumele tău"
@@ -146,8 +187,9 @@ export default function Checkout() {
                   <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Email</label>
                   <input 
                     type="email" 
-                    required
-                    value={formData.email}
+                  required
+                  autoComplete="email"
+                  value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="adresa@email.com"
                     className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm" 
@@ -157,8 +199,10 @@ export default function Checkout() {
                   <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Telefon</label>
                   <input 
                     type="tel" 
-                    required
-                    value={formData.phone}
+                  required
+                  autoComplete="tel"
+                  pattern="^[0-9+ ().-]{8,}$"
+                  value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="07xx xxx xxx"
                     className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm" 
@@ -212,11 +256,50 @@ export default function Checkout() {
                     <textarea 
                       rows={3} 
                       required
+                      autoComplete="street-address"
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                       className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300" 
-                      placeholder="Strada, Numar, Bloc, Oras, Judet..."
+                      placeholder="Stradă, număr, bloc, scară, apartament"
                     />
+                    <div className="grid sm:grid-cols-2 gap-4 pt-2">
+                      <div className="space-y-2">
+                        <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Localitate</label>
+                        <input
+                          type="text"
+                          required
+                          autoComplete="address-level2"
+                          value={formData.city}
+                          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                          className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300"
+                          placeholder="Oraș / comună"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Județ / sector</label>
+                        <input
+                          type="text"
+                          required
+                          autoComplete="address-level1"
+                          value={formData.county}
+                          onChange={(e) => setFormData({ ...formData, county: e.target.value })}
+                          className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300"
+                          placeholder="Ex: Brașov / Sector 3"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-2 pt-2">
+                      <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Cod poștal (opțional)</label>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        autoComplete="postal-code"
+                        value={formData.postalCode}
+                        onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                        className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300"
+                        placeholder="Dacă îl știi"
+                      />
+                    </div>
                   </motion.div>
                 ) : (
                   <motion.div
@@ -227,21 +310,66 @@ export default function Checkout() {
                     transition={{ duration: 0.3 }}
                     className="space-y-2 text-left overflow-hidden"
                   >
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Nume / Locație EasyBox</label>
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Nume EasyBox</label>
                     <input 
                       type="text" 
                       required
                       value={formData.easyboxName}
                       onChange={(e) => setFormData({ ...formData, easyboxName: e.target.value })}
                       className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300" 
-                      placeholder="Ex: EasyBox Libertății, Brașov sau localitate/județ"
+                      placeholder="Ex: easybox Mega Image Libertății"
                     />
+                    <div className="grid sm:grid-cols-2 gap-4 pt-2">
+                      <div className="space-y-2">
+                        <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Localitate</label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.easyboxCity}
+                          onChange={(e) => setFormData({ ...formData, easyboxCity: e.target.value })}
+                          className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300"
+                          placeholder="Oraș / localitate"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Județ / sector</label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.easyboxCounty}
+                          onChange={(e) => setFormData({ ...formData, easyboxCounty: e.target.value })}
+                          className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300"
+                          placeholder="Ex: Ilfov / Sector 6"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-2 pt-2">
+                      <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Adresă / reper EasyBox (opțional)</label>
+                      <input
+                        type="text"
+                        value={formData.easyboxAddress}
+                        onChange={(e) => setFormData({ ...formData, easyboxAddress: e.target.value })}
+                        className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300"
+                        placeholder="Stradă, magazin, reper, dacă îl știi"
+                      />
+                    </div>
                     <p className="text-[10px] text-text-muted mt-1 font-light leading-relaxed">
-                      * Vom selecta cel mai apropiat locker EasyBox în funcție de adresa/telefonul tău dacă nu știi denumirea exactă.
+                      Alege un EasyBox din aplicația Sameday/eMAG sau scrie numele lockerului apropiat, localitatea și județul.
                     </p>
                   </motion.div>
                 )}
               </AnimatePresence>
+
+              <div className="space-y-2 text-left">
+                <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Observații (opțional)</label>
+                <textarea
+                  rows={2}
+                  value={formData.notes}
+                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                  className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm placeholder:text-gray-300"
+                  placeholder="Ex: interval preferat de livrare, detalii suplimentare"
+                />
+              </div>
 
               {/* Error Alert */}
               <AnimatePresence>

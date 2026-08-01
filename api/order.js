@@ -9,7 +9,15 @@ function escapeHtml(value = '') {
     .replaceAll("'", '&#039;');
 }
 
-async function sendEmail({ to, from, replyTo, subject, html }) {
+function isEmail(value = '') {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim());
+}
+
+function normalizePhone(value = '') {
+  return String(value).replace(/[^\d+]/g, '');
+}
+
+async function sendEmail({ to, from, replyTo, subject, html, text }) {
   const response = await fetch(RESEND_API_URL, {
     method: 'POST',
     headers: {
@@ -22,6 +30,7 @@ async function sendEmail({ to, from, replyTo, subject, html }) {
       reply_to: replyTo,
       subject,
       html,
+      text,
     }),
   });
 
@@ -57,9 +66,14 @@ export default async function handler(req, res) {
       deliveryMethod = '',
       deliveryDetails = '',
       notes = '',
+      website = '',
       orderItems = '',
       total = '',
     } = req.body || {};
+
+    if (String(website).trim()) {
+      return res.status(200).json({ success: true });
+    }
 
     const cleanName = String(name).trim();
     const cleanEmail = String(email).trim();
@@ -70,6 +84,14 @@ export default async function handler(req, res) {
 
     if (!cleanName || !cleanEmail || !cleanPhone || !cleanDeliveryDetails) {
       return res.status(400).json({ success: false, message: 'Completează numele, emailul, telefonul și detaliile de livrare.' });
+    }
+
+    if (!isEmail(cleanEmail)) {
+      return res.status(400).json({ success: false, message: 'Te rugăm să verifici adresa de email.' });
+    }
+
+    if (normalizePhone(cleanPhone).length < 8) {
+      return res.status(400).json({ success: false, message: 'Te rugăm să verifici numărul de telefon.' });
     }
 
     const safe = {
@@ -83,18 +105,45 @@ export default async function handler(req, res) {
       total: escapeHtml(total),
     };
 
+    const ownerText = [
+      'Comandă nouă - Povești de Acasă',
+      '',
+      `Nume: ${cleanName}`,
+      `Email: ${cleanEmail}`,
+      `Telefon: ${cleanPhone}`,
+      `Livrare: ${cleanDeliveryMethod}`,
+      '',
+      'Detalii livrare:',
+      cleanDeliveryDetails,
+      '',
+      `Observații: ${cleanNotes || '-'}`,
+      `Produse: ${orderItems}`,
+      `Total: ${total}`,
+      '',
+      'Următorul pas: contactează clientul pentru confirmare, apoi pregătește coletul.',
+    ].join('\n');
+
     const ownerHtml = `
-      <h2>Comandă nouă — Povești de Acasă</h2>
-      <p><strong>Nume:</strong> ${safe.name}</p>
-      <p><strong>Email:</strong> ${safe.email}</p>
-      <p><strong>Telefon:</strong> ${safe.phone}</p>
-      <p><strong>Livrare:</strong> ${safe.deliveryMethod}</p>
-      <p><strong>Detalii livrare:</strong><br>${safe.deliveryDetails.replaceAll('\n', '<br>')}</p>
-      <p><strong>Observații:</strong><br>${safe.notes.replaceAll('\n', '<br>')}</p>
-      <p><strong>Produse:</strong> ${safe.orderItems}</p>
-      <p><strong>Total:</strong> ${safe.total}</p>
-      <hr>
-      <p>Următorul pas: contactează clientul pentru confirmare, apoi pregătește coletul.</p>
+      <div style="font-family: Arial, sans-serif; color: #2B1B15; line-height: 1.5;">
+        <h2 style="margin: 0 0 16px;">Comandă nouă - Povești de Acasă</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 18px;">
+          <tr><td style="padding: 8px 0; color: #7A6A5F;">Nume</td><td style="padding: 8px 0;"><strong>${safe.name}</strong></td></tr>
+          <tr><td style="padding: 8px 0; color: #7A6A5F;">Email</td><td style="padding: 8px 0;">${safe.email}</td></tr>
+          <tr><td style="padding: 8px 0; color: #7A6A5F;">Telefon</td><td style="padding: 8px 0;"><strong>${safe.phone}</strong></td></tr>
+          <tr><td style="padding: 8px 0; color: #7A6A5F;">Livrare</td><td style="padding: 8px 0;"><strong>${safe.deliveryMethod}</strong></td></tr>
+          <tr><td style="padding: 8px 0; color: #7A6A5F;">Produse</td><td style="padding: 8px 0;">${safe.orderItems}</td></tr>
+          <tr><td style="padding: 8px 0; color: #7A6A5F;">Total</td><td style="padding: 8px 0;"><strong>${safe.total}</strong></td></tr>
+        </table>
+        <div style="background: #FAF1E6; border: 1px solid #F1DCC8; border-radius: 14px; padding: 16px; margin-bottom: 16px;">
+          <p style="margin: 0 0 8px;"><strong>Detalii livrare</strong></p>
+          <p style="margin: 0; white-space: pre-line;">${safe.deliveryDetails}</p>
+        </div>
+        <div style="background: #FDF8F3; border: 1px solid #F1DCC8; border-radius: 14px; padding: 16px; margin-bottom: 16px;">
+          <p style="margin: 0 0 8px;"><strong>Observații client</strong></p>
+          <p style="margin: 0; white-space: pre-line;">${safe.notes}</p>
+        </div>
+        <p style="margin: 0;"><strong>De făcut:</strong> verifică datele, contactează clientul dacă lipsește ceva, apoi pregătește AWB-ul.</p>
+      </div>
     `;
 
     await sendEmail({
@@ -103,20 +152,44 @@ export default async function handler(req, res) {
       replyTo: cleanEmail,
       subject: `Comandă nouă — ${cleanName}`,
       html: ownerHtml,
+      text: ownerText,
     });
 
     try {
+      const clientText = [
+        `Bună, ${cleanName}!`,
+        '',
+        'Am primit cererea ta de comandă pentru Povești de Acasă.',
+        `Produse: ${orderItems}`,
+        `Total: ${total}`,
+        `Livrare: ${cleanDeliveryMethod}`,
+        '',
+        'Detalii livrare:',
+        cleanDeliveryDetails,
+        '',
+        'Te vom contacta în curând pentru confirmare.',
+      ].join('\n');
+
       await sendEmail({
         to: [cleanEmail],
         from: fromEmail,
         replyTo: toEmail,
         subject: 'Am primit cererea ta de comandă — Povești de Acasă',
         html: `
-          <h2>Îți mulțumim, ${safe.name}!</h2>
-          <p>Am primit cererea ta pentru <strong>${safe.orderItems}</strong>.</p>
-          <p>Te vom contacta în curând pentru confirmarea comenzii și a livrării.</p>
-          <p><strong>Total:</strong> ${safe.total}</p>
+          <div style="font-family: Arial, sans-serif; color: #2B1B15; line-height: 1.5;">
+            <h2 style="margin: 0 0 16px;">Îți mulțumim, ${safe.name}!</h2>
+            <p>Am primit cererea ta pentru <strong>${safe.orderItems}</strong>.</p>
+            <p><strong>Total:</strong> ${safe.total}</p>
+            <p><strong>Livrare:</strong> ${safe.deliveryMethod}</p>
+            <div style="background: #FAF1E6; border: 1px solid #F1DCC8; border-radius: 14px; padding: 16px; margin: 16px 0;">
+              <p style="margin: 0 0 8px;"><strong>Detalii livrare primite</strong></p>
+              <p style="margin: 0; white-space: pre-line;">${safe.deliveryDetails}</p>
+            </div>
+            <p>Te vom contacta în curând pentru confirmarea comenzii și a livrării.</p>
+            <p>Dacă ai observat o greșeală în datele de mai sus, răspunde la acest email sau scrie-ne pe WhatsApp la 0741 312 827.</p>
+          </div>
         `,
+        text: clientText,
       });
     } catch (error) {
       console.error('Confirmarea către client nu a putut fi trimisă:', error);

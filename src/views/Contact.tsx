@@ -13,9 +13,11 @@ export default function Contact() {
     name: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
+    website: ''
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('A apărut o problemă la trimiterea mesajului. Te rugăm să încerci din nou sau să ne scrii direct pe e-mail.');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,12 +36,14 @@ export default function Contact() {
       const result = await response.json().catch(() => null);
       if (response.ok && result?.success) {
         setStatus('success');
-        setFormData({ name: '', email: '', phone: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', message: '', website: '' });
       } else {
+        setErrorMessage(result?.message || 'A apărut o problemă la trimiterea mesajului. Te rugăm să încerci din nou sau să ne scrii direct pe e-mail.');
         setStatus('error');
       }
     } catch (error) {
       console.error('Eroare trimitere mesaj:', error);
+      setErrorMessage('A apărut o eroare de conexiune. Te rugăm să verifici conexiunea și să încerci din nou.');
       setStatus('error');
     }
   };
@@ -119,11 +123,22 @@ export default function Contact() {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-5 text-left">
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.website}
+                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                className="hidden"
+                aria-hidden="true"
+              />
+
               <div className="space-y-1.5">
                 <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Nume complet</label>
                 <input 
                   type="text" 
                   required
+                  autoComplete="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Numele tău"
@@ -135,9 +150,10 @@ export default function Contact() {
                 <div className="space-y-1.5">
                   <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Email</label>
                   <input 
-                    type="email" 
-                    required
-                    value={formData.email}
+                  type="email" 
+                  required
+                  autoComplete="email"
+                  value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="adresa@email.com"
                     className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm" 
@@ -146,8 +162,9 @@ export default function Contact() {
                 <div className="space-y-1.5">
                   <label className="block text-xs uppercase tracking-wider font-semibold text-text-main">Telefon (opțional)</label>
                   <input 
-                    type="tel" 
-                    value={formData.phone}
+                  type="tel" 
+                  autoComplete="tel"
+                  value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="07xx xxx xxx"
                     className="w-full px-5 py-4 rounded-xl border border-orange-200/40 focus:outline-none focus:ring-2 focus:ring-brand-purple/20 bg-[#FDF8F3] text-sm" 
@@ -189,7 +206,7 @@ export default function Contact() {
                     className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl flex items-center gap-3 text-sm"
                   >
                     <AlertCircle size={20} className="flex-shrink-0" />
-                    <span>A apărut o problemă la trimiterea mesajului. Te rugăm să încerci din nou sau să ne scrii direct pe e-mail.</span>
+                    <span>{errorMessage}</span>
                   </motion.div>
                 )}
               </AnimatePresence>
