@@ -22,6 +22,11 @@ export function navigate(to: string) {
   notifyRouteChange();
 }
 
+export function replace(to: string) {
+  window.history.replaceState({}, '', to);
+  notifyRouteChange();
+}
+
 export function useLocation() {
   const [location, setLocation] = useState<LocationState>(() => getLocation());
 

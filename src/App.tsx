@@ -10,7 +10,7 @@ import Contact from './views/Contact';
 import Terms from './views/Terms';
 import Privacy from './views/Privacy';
 import NotFound from './views/NotFound';
-import { useLocation } from './router';
+import { replace, useLocation } from './router';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -46,11 +46,20 @@ function AnimatedPage({ children, variant = 'fade' }: { children: ReactNode; var
   );
 }
 
+function RedirectTo({ to }: { to: string }) {
+  useEffect(() => {
+    replace(to);
+  }, [to]);
+
+  return null;
+}
+
 function CurrentPage() {
   const { pathname } = useLocation();
 
   if (pathname === '/') return <AnimatedPage><Home /></AnimatedPage>;
   if (pathname === '/shop') return <AnimatedPage variant="slide"><Shop /></AnimatedPage>;
+  if (pathname === '/blog' || pathname.startsWith('/blog/')) return <RedirectTo to="/" />;
   if (pathname === '/checkout') return <AnimatedPage variant="slide"><Checkout /></AnimatedPage>;
   if (pathname === '/contact') return <AnimatedPage><Contact /></AnimatedPage>;
   if (pathname === '/termeni' || pathname === '/termeni-si-conditii') return <AnimatedPage><Terms /></AnimatedPage>;
