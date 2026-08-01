@@ -61,7 +61,7 @@ export default function Footer() {
             <Tiktok size={18} />
           </a>
           <a 
-            href="mailto:contact@povestideacasa.ro" 
+            href="mailto:povestideacasa.online@gmail.com" 
             className="text-orange-200/70 hover:text-white hover:bg-white/5 p-3 rounded-full transition-all border border-orange-100/5"
             aria-label="Email"
           >
@@ -74,8 +74,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-orange-100/5 flex flex-col md:flex-row justify-between items-center text-xs text-orange-200/40">
         <p>© 2026 Povești de-acasă. Toate drepturile rezervate.</p>
         <div className="flex space-x-6 mt-4 md:mt-0 font-light">
-          <Link to="/termeni" className="hover:text-white transition-colors">Termeni și condiții</Link>
-          <Link to="/confidentialitate" className="hover:text-white transition-colors">Politică de confidențialitate</Link>
+          <Link to="/termeni-si-conditii" className="hover:text-white transition-colors">Termeni și condiții</Link>
+          <Link to="/politica-de-confidentialitate" className="hover:text-white transition-colors">Politică de confidențialitate</Link>
         </div>
       </div>
     </footer>

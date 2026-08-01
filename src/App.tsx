@@ -57,8 +57,8 @@ function CurrentPage() {
   if (pathname.startsWith('/blog/')) return <AnimatedPage variant="slide"><BlogPost /></AnimatedPage>;
   if (pathname === '/checkout') return <AnimatedPage variant="slide"><Checkout /></AnimatedPage>;
   if (pathname === '/contact') return <AnimatedPage><Contact /></AnimatedPage>;
-  if (pathname === '/termeni') return <AnimatedPage><Terms /></AnimatedPage>;
-  if (pathname === '/confidentialitate') return <AnimatedPage><Privacy /></AnimatedPage>;
+  if (pathname === '/termeni' || pathname === '/termeni-si-conditii') return <AnimatedPage><Terms /></AnimatedPage>;
+  if (pathname === '/confidentialitate' || pathname === '/politica-de-confidentialitate') return <AnimatedPage><Privacy /></AnimatedPage>;
 
   return <AnimatedPage><NotFound /></AnimatedPage>;
 }
