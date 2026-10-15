@@ -119,7 +119,7 @@ export default function Shop() {
               </h2>
               
               <div className="flex items-baseline justify-center gap-3 my-5">
-                <span className="text-4xl font-serif italic text-brand-orange font-semibold">99 lei</span>
+                <span className="text-4xl font-serif italic text-brand-orange font-semibold">119,99 lei</span>
                 <span className="text-xl text-text-muted/50 line-through font-light">149 lei</span>
               </div>
               

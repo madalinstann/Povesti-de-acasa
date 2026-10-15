@@ -63,7 +63,7 @@ export default function Checkout() {
           notes: formData.notes,
           website: formData.website,
           orderItems: "Set Cartonașe «Explorăm Povești» — 98 cartonașe",
-          total: '99 lei — ramburs'
+          total: '119,99 lei — ramburs'
         })
       });
 
@@ -111,7 +111,7 @@ export default function Checkout() {
             </div>
               <div className="flex justify-between">
                 <span>Total plată:</span>
-                <span className="font-semibold text-brand-orange">99 lei (Ramburs)</span>
+                <span className="font-semibold text-brand-orange">119,99 lei (Ramburs)</span>
               </div>
               <div className="text-left pt-3 border-t border-orange-100/60">
                 <span className="block text-text-muted mb-1">Detalii livrare trimise:</span>
@@ -394,7 +394,7 @@ export default function Checkout() {
                 disabled={isSubmitting}
                 className="w-full bg-[#3D2B1F] hover:bg-brand-orange disabled:bg-gray-400 text-white font-semibold py-5 rounded-2xl transition-all shadow-md shadow-orange-950/15 text-sm tracking-wider uppercase mt-4 flex items-center justify-center gap-2"
               >
-                {isSubmitting ? 'Se trimite cererea...' : 'Trimite cererea de comandă — 99 lei'}
+                {isSubmitting ? 'Se trimite cererea...' : 'Trimite cererea de comandă — 119,99 lei'}
               </motion.button>
               
               <div className="text-center text-[10px] sm:text-xs text-text-muted/70 flex items-center justify-center gap-2 pt-2 border-t border-orange-100/30">
@@ -422,14 +422,14 @@ export default function Checkout() {
                   <p className="text-xs text-text-muted">98 cartonașe de conectare</p>
                 </div>
                 <div className="ml-auto font-serif text-brand-orange font-bold">
-                  99 lei
+                  119,99 lei
                 </div>
               </div>
               
               <div className="border-t border-orange-200/30 pt-6 space-y-3 text-sm">
                 <div className="flex justify-between text-text-muted">
                   <span>Subtotal:</span>
-                  <span>99 lei</span>
+                  <span>119,99 lei</span>
                 </div>
                 <div className="flex justify-between text-text-muted">
                   <span>Livrare:</span>
@@ -437,7 +437,7 @@ export default function Checkout() {
                 </div>
                 <div className="flex justify-between text-base font-serif font-bold text-text-main border-t border-orange-200/20 pt-4 mt-2">
                   <span>Total de plată:</span>
-                  <span className="text-brand-orange text-xl">99 lei</span>
+                  <span className="text-brand-orange text-xl">119,99 lei</span>
                 </div>
               </div>
             </div>

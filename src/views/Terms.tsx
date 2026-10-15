@@ -20,7 +20,7 @@ export default function Terms() {
       <h2 className={h2}>2. Produs și preț</h2>
       <p>
         Produsul principal este setul educațional „Explorăm Povești” — 98 de cartonașe pentru
-        lectură, conectare și gândire critică. Prețul afișat pe site este 99 lei.
+        lectură, conectare și gândire critică. Prețul afișat pe site este 119,99 lei.
       </p>
 
       <h2 className={h2}>3. Plasarea cererii de comandă</h2>
